@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
 import axios from "axios";
 
 const options = {
@@ -11,7 +10,7 @@ const options = {
     "tiers[0]": "1",
     orderBy: "marketCap",
     orderDirection: "desc",
-    limit: "50",
+    limit: "60",
     offset: "0",
   },
   headers: {
@@ -31,6 +30,7 @@ export const fetchCoinData = createAsyncThunk(
 
 const initialState = {
   coinsData: null,
+  isLoading: false,
 };
 
 export const coinSlice = createSlice({
@@ -38,11 +38,16 @@ export const coinSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers : (builder)  => {
+    builder.addCase(fetchCoinData.pending, (state, action) => {
+        state.isLoading = true;
+    })
     builder.addCase(fetchCoinData.fulfilled, (state,action) => {
+        state.isLoading = false;
         state.coinsData = action.payload
     })
 }
 });
 
 export const coinData = state => state.coinData.coinsData;
+export const isLoading = state => state.coinData.isLoading;
 export default coinSlice.reducer;
