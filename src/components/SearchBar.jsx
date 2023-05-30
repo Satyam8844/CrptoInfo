@@ -5,15 +5,22 @@ import { useSelector } from "react-redux";
 
 const SearchBar = () => {
     const apiData = useSelector(coinData);
+    const searchOptions = new Set()
+    for(let i=0; i<apiData?.data.coins.length; i++){
+      searchOptions.add(apiData?.data.coins[i].name);
+    }
+    const data = [...new Set(searchOptions)];
+    console.log(data);
+    
   return (
-    <Grid container > 
+    <Grid container>
       <Grid item xs={6}>
         <Autocomplete
           disablePortal
           id="combo-box-demo"
-          options={apiData?.data.coins}
-          sx={{ width: 300}}
-          renderInput={(params) => <TextField {...params} label="Coin Name" sx={{color: 'white', borderColor: 'white'}} />}
+          options={data}
+          sx={{ width: 300 }}
+          renderInput={(params) => <TextField {...params} label="Coin Name" />}
         />
       </Grid>
     </Grid>
