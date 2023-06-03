@@ -10,7 +10,7 @@ const options = {
     "tiers[0]": "1",
     orderBy: "marketCap",
     orderDirection: "desc",
-    limit: "60",
+    limit: "300",
     offset: "0",
   },
   headers: {
@@ -31,23 +31,41 @@ export const fetchCoinData = createAsyncThunk(
 const initialState = {
   coinsData: null,
   isLoading: false,
+  filterData: [],
 };
 
 export const coinSlice = createSlice({
   name: "coinData",
   initialState,
-  reducers: {},
-  extraReducers : (builder)  => {
+  reducers: {
+    searchFilter: (state, action) => {
+      state.searchParam = action.payload;
+    },
+    filterItem: (state, action) => {
+      const { param } = action.payload;
+      const filter = state.coinsData?.data.coins.filter((newVal) => {
+        let temp =
+          typeof newVal.name === "string" ? newVal.name.toLowerCase() : "";
+        let tempSearch = typeof param === "string" ? param.toLowerCase() : "";
+        return temp.includes(tempSearch);
+      });
+      state.filterData = filter;
+    },
+  },
+  extraReducers: (builder) => {
     builder.addCase(fetchCoinData.pending, (state, action) => {
-        state.isLoading = true;
-    })
-    builder.addCase(fetchCoinData.fulfilled, (state,action) => {
-        state.isLoading = false;
-        state.coinsData = action.payload
-    })
-}
+      state.isLoading = true;
+    });
+    builder.addCase(fetchCoinData.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.coinsData = action.payload;
+    });
+  },
 });
 
-export const coinData = state => state.coinData.coinsData;
-export const isLoading = state => state.coinData.isLoading;
+//export const searchParam = (state) => state.coinData.searchParam;
 export default coinSlice.reducer;
+export const { searchFilter, filterItem } = coinSlice.actions;
+export const coinData = (state) => state.coinData.coinsData;
+export const isLoading = (state) => state.coinData.isLoading;
+export const filterData = (state) => state.coinData.filterData;
