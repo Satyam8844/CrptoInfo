@@ -29,30 +29,32 @@ const ColumnName = () => {
         backgroundColor: "rgb(8 17 29)",
         borderRadius: "10px",
         boxShadow: "0 2px 5px rgb(0 0 0 / 50%)",
-        height: '800px',
-        overflowY: 'auto'
+        maxHeight: "685px",
+        height: "100%",
+        overflowY: "auto",
       }}
     >
-      <Grid item sm={2}>
+      <Grid item xs={2} sm={2}>
         <Typography fontWeight={700}>Asset</Typography>
       </Grid>
-      <Grid item sm={2}>
+      <Grid item xs={2} sm={2}>
         <Typography fontWeight={700}>Symbol</Typography>
       </Grid>
-      <Grid item sm={2}>
+      <Grid item xs={2} sm={2}>
         <Typography fontWeight={700}>Price</Typography>
       </Grid>
-      <Grid item sm={2}>
+      <Grid item xs={2} sm={2}>
         <Typography fontWeight={700}>Change</Typography>
       </Grid>
-      <Grid item sm={2}>
+      <Grid item xs={2} sm={2}>
         <Typography fontWeight={700}>24hr Volume</Typography>
       </Grid>
-      <Grid item sm={2}>
+      <Grid item xs={2} sm={2}>
         <Typography fontWeight={700}>Info</Typography>
       </Grid>
       <Grid
         item
+        xs={12}
         sm={12}
         // xs={{
         //   backgroundColor: "rgb(8 17 29)",
